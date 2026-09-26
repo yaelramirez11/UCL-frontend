@@ -1,0 +1,41 @@
+.match-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.match-card__stage {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #1d4ed8;
+}
+
+.match-card__teams {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.match-card__team {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.match-card__score {
+  margin: 0;
+  font-weight: 900;
+}
+
+.match-card__meta {
+  margin: 0;
+  font-size: 14px;
+  color: #6b6b6b;
+}

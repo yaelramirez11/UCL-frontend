@@ -1,0 +1,27 @@
+.main__hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 360px;
+  padding: 48px 16px;
+  background-color: #12275c;
+  color: #fff;
+  text-align: center;
+}
+
+.main__title {
+  margin: 0 0 16px;
+  font-size: 36px;
+  font-weight: 900;
+}
+
+.main__subtitle {
+  margin: 0 auto;
+  max-width: 560px;
+}
+
+@media (min-width: 768px) {
+  .main__title {
+    font-size: 56px;
+  }
+}

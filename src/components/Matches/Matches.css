@@ -1,0 +1,26 @@
+.matches {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 16px 48px;
+}
+
+.matches__title {
+  margin: 0 0 24px;
+}
+
+.matches__list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .matches__list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
