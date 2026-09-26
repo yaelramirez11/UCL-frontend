@@ -1,7 +1,9 @@
 .header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   padding: 16px 24px;
   background-color: #0b1d4a;
   color: #fff;
