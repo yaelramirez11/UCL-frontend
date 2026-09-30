@@ -14,15 +14,12 @@ function Matches({
 }) {
   const [query, setQuery] = useState("");
   const [submittedQuery, setSubmittedQuery] = useState("");
+  const [searchError, setSearchError] = useState("");
   const [visibleCount, setVisibleCount] = useState(3);
 
   useEffect(() => {
     onRequestMatches();
   }, [onRequestMatches]);
-
-  useEffect(() => {
-    setVisibleCount(3);
-  }, [submittedQuery]);
 
   const filteredMatches = matches.filter((match) => {
     const text = `${match.homeTeam} ${match.awayTeam}`.toLowerCase();
@@ -31,9 +28,22 @@ function Matches({
 
   const visibleMatches = filteredMatches.slice(0, visibleCount);
 
+  function handleQueryChange(event) {
+    setQuery(event.target.value);
+    setSearchError("");
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
+
+    if (!query.trim()) {
+      setSearchError("Por favor, introduzca una palabra clave");
+      return;
+    }
+
+    setSearchError("");
     setSubmittedQuery(query.trim());
+    setVisibleCount(3);
   }
 
   return (
@@ -41,7 +51,8 @@ function Matches({
       <h1 className="matches__title">Partidos</h1>
       <SearchForm
         value={query}
-        onChange={(event) => setQuery(event.target.value)}
+        error={searchError}
+        onChange={handleQueryChange}
         onSubmit={handleSubmit}
       />
       {isLoading && <Preloader />}

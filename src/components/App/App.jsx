@@ -11,21 +11,13 @@ import {
 } from "../../utils/footballDataApi";
 import "./App.css";
 
-const STORAGE_KEY = "ucl-pulse-matches";
 const ERROR_MESSAGE =
   "Lo sentimos, algo ha salido mal durante la solicitud. Es posible que haya un problema de conexión o que el servidor no funcione. Por favor, inténtalo más tarde.";
-
-function readStoredMatches() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-}
+const OFFLINE_MESSAGE =
+  "No tienes conexión a internet. Revisa tu conexión e inténtalo de nuevo.";
 
 function App() {
-  const [matches, setMatches] = useState(readStoredMatches);
+  const [matches, setMatches] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [hasRequested, setHasRequested] = useState(false);
@@ -33,21 +25,24 @@ function App() {
   const handleRequestMatches = useCallback(() => {
     setIsLoading(true);
     setError("");
+    setMatches([]);
+
+    if (!navigator.onLine) {
+      setError(OFFLINE_MESSAGE);
+      setHasRequested(true);
+      setIsLoading(false);
+      return;
+    }
 
     getChampionsLeagueMatches()
       .then((data) => {
         const normalized = (data.matches || []).map(normalizeMatch);
         setMatches(normalized);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
         setHasRequested(true);
       })
       .catch(() => {
-        const stored = readStoredMatches();
-        if (stored.length > 0) {
-          setMatches(stored);
-        } else {
-          setError(ERROR_MESSAGE);
-        }
+        setMatches([]);
+        setError(navigator.onLine ? ERROR_MESSAGE : OFFLINE_MESSAGE);
         setHasRequested(true);
       })
       .finally(() => {
