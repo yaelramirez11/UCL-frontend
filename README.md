@@ -22,4 +22,6 @@ VITE_FOOTBALL_DATA_TOKEN=tu_token
 
 ## Despliegue
 
-La app está preparada para Netlify (proxy a football-data.org). Cuando esté publicada, el enlace irá aquí.
+- App: [https://earnest-kringle-a41634.netlify.app](https://earnest-kringle-a41634.netlify.app)
+
+- Pull request: [https://github.com/yaelramirez11/UCL-frontend/pull/1](https://github.com/yaelramirez11/UCL-frontend/pull/1)
