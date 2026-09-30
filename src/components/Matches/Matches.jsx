@@ -1,28 +1,49 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchForm from "../SearchForm/SearchForm";
 import MatchCard from "../MatchCard/MatchCard";
 import Preloader from "../Preloader/Preloader";
 import NotFound from "../NotFound/NotFound";
-import mockMatches from "../../utils/mockMatches";
 import "./Matches.css";
 
-function Matches() {
+function Matches({
+  matches,
+  isLoading,
+  error,
+  hasRequested,
+  onRequestMatches,
+}) {
   const [query, setQuery] = useState("");
   const [submittedQuery, setSubmittedQuery] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [searchError, setSearchError] = useState("");
+  const [visibleCount, setVisibleCount] = useState(3);
 
-  const filteredMatches = mockMatches.filter((match) => {
+  useEffect(() => {
+    onRequestMatches();
+  }, [onRequestMatches]);
+
+  const filteredMatches = matches.filter((match) => {
     const text = `${match.homeTeam} ${match.awayTeam}`.toLowerCase();
     return text.includes(submittedQuery.toLowerCase());
   });
 
+  const visibleMatches = filteredMatches.slice(0, visibleCount);
+
+  function handleQueryChange(event) {
+    setQuery(event.target.value);
+    setSearchError("");
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
-    setIsLoading(true);
-    setTimeout(() => {
-      setSubmittedQuery(query.trim());
-      setIsLoading(false);
-    }, 800);
+
+    if (!query.trim()) {
+      setSearchError("Por favor, introduzca una palabra clave");
+      return;
+    }
+
+    setSearchError("");
+    setSubmittedQuery(query.trim());
+    setVisibleCount(3);
   }
 
   return (
@@ -30,19 +51,34 @@ function Matches() {
       <h1 className="matches__title">Partidos</h1>
       <SearchForm
         value={query}
-        onChange={(event) => setQuery(event.target.value)}
+        error={searchError}
+        onChange={handleQueryChange}
         onSubmit={handleSubmit}
       />
       {isLoading && <Preloader />}
-      {!isLoading && filteredMatches.length === 0 && <NotFound />}
-      {!isLoading && filteredMatches.length > 0 && (
-        <ul className="matches__list">
-          {filteredMatches.map((match) => (
-            <li key={match.id} className="matches__item">
-              <MatchCard match={match} />
-            </li>
-          ))}
-        </ul>
+      {!isLoading && error && <p className="matches__error">{error}</p>}
+      {!isLoading && !error && hasRequested && filteredMatches.length === 0 && (
+        <NotFound />
+      )}
+      {!isLoading && !error && visibleMatches.length > 0 && (
+        <>
+          <ul className="matches__list">
+            {visibleMatches.map((match) => (
+              <li key={match.id} className="matches__item">
+                <MatchCard match={match} />
+              </li>
+            ))}
+          </ul>
+          {visibleCount < filteredMatches.length && (
+            <button
+              className="matches__more"
+              type="button"
+              onClick={() => setVisibleCount((count) => count + 3)}
+            >
+              Mostrar más
+            </button>
+          )}
+        </>
       )}
     </main>
   );

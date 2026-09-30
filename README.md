@@ -1,16 +1,27 @@
-# React + Vite
+# UCL Pulse
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación front-end del proyecto final de TripleTen. Muestra partidos de la UEFA Champions League con datos de [football-data.org](https://www.football-data.org/).
 
-Currently, two official plugins are available:
+## Páginas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- `/` — descripción del proyecto
+- `/partidos` — resultados de la API (búsqueda, preloader, mostrar más)
 
-## React Compiler
+## Desarrollo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+npm run dev
+```
 
-## Expanding the ESLint configuration
+Crea un archivo `.env` (no se sube a Git):
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```env
+VITE_FOOTBALL_DATA_TOKEN=tu_token
+```
+
+## Despliegue
+
+- App: [https://earnest-kringle-a41634.netlify.app](https://earnest-kringle-a41634.netlify.app)
+
+- Pull request: [https://github.com/yaelramirez11/UCL-frontend/pull/1](https://github.com/yaelramirez11/UCL-frontend/pull/1)

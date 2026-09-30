@@ -1,6 +1,6 @@
 import "./SearchForm.css";
 
-function SearchForm({ value, onChange, onSubmit }) {
+function SearchForm({ value, error, onChange, onSubmit }) {
   return (
     <form className="search-form" onSubmit={onSubmit}>
       <label className="search-form__label" htmlFor="team-search">
@@ -18,6 +18,11 @@ function SearchForm({ value, onChange, onSubmit }) {
       <button className="search-form__button" type="submit">
         Buscar
       </button>
+      {error && (
+        <p className="search-form__error">
+          {error}
+        </p>
+      )}
     </form>
   );
 }
